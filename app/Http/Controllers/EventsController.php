@@ -29,6 +29,7 @@ class EventsController extends Controller
 
     public function viewEvent($id) {
         $event = Event::findOrFail($id);
+        abort_if(Auth::user()->id != $event->created_by, 403, "Unauthorised access");
         return view('dashboard.event-details')->with(compact(['event']));
     }
     
